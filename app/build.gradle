@@ -25,9 +25,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
-            if(project.hasProperty("diiaAtHome.signing")
-                    && new File(project.property("diiaAtHome.signing") + ".gradle").exists()) {
-                apply from: project.property("diiaAtHome.signing") + ".gradle"
+            if(project.hasProperty("grex.signing")
+                    && new File(project.property("grex.signing") + ".gradle").exists()) {
+                apply from: project.property("grex.signing") + ".gradle"
             }
         }
     }
@@ -58,4 +58,17 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+}
+
+class Load extends DefaultTask{
+    @Input
+    String sourceUrl
+
+    @OutputFile
+    File file
+
+    @TaskAction
+    void load(){
+        ant.get(src: sourceUrl, dest: file)
+    }
 }
